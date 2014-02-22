@@ -1,0 +1,52 @@
+﻿<UserControl
+    x:Class="Weather.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Weather"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Border BorderBrush="#00b2f0" BorderThickness="1,0,0,0">
+        <Grid Background="White" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- HEADER -->
+            <Grid Name="HeadGrid" Background="#00b2f0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="40, 32, 17, 13">
+                    <Button x:Name="BackButton" Margin="0,3,0,0" Style="{StaticResource BackButtonStyle}" Click="BackButton_Click"/>
+                    <TextBlock Name="Title" Margin="20,10,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="24.6667" Text="关于应用" Foreground="White"/>
+                </StackPanel>
+                <Image Source="Assets/SmallLogo.png" Width="29" Height="29" Margin="250,46,17,21" />
+            </Grid>
+
+            <!-- CONTENT AREA -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                <Grid Margin="40,33,40,39" VerticalAlignment="Top" Grid.RowSpan="3">
+                    <StackPanel>
+                        <TextBlock Name="Info1" TextAlignment="Center" Margin="20,10,0,0" FontFamily="Microsoft YaHei UI" FontWeight="SemiLight" FontSize="20" 
+                                     TextWrapping="Wrap" Text="至我生命中的那个你" Foreground="#000000" FontStyle="Italic"/>
+                        <TextBlock Name="Info2" TextAlignment="Left" Margin="20,50,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="18" 
+                                     TextWrapping="Wrap" Text="简洁的天气应用
+如有任何问题，请联系我mail:jasinechen@gmail.com" Foreground="#000000"/>
+                        <HyperlinkButton Name="MailLink" Content="Email: jasinechen@gmail.com" NavigateUri="mailto:jasinechen@gmail.com" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <HyperlinkButton Name="SiteLink" Content="Site: http://jasine.net" NavigateUri="http://jasine.net" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                    </StackPanel>
+                    
+                </Grid>
+            </ScrollViewer>
+            <Button x:Name="OKButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1"  Margin="0,0,0,50" Content="确定"   Foreground="Black"  Click="BackButton_Click"/>
+            
+        </Grid>
+    </Border>
+</UserControl>

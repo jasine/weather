@@ -1,0 +1,233 @@
+﻿<Page
+    x:Class="Weather.MainPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Weather"
+    xmlns:common="using:Weather.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+
+        <!-- 此页所显示的项集合-->
+        <CollectionViewSource
+            x:Name="itemsViewSource"
+            Source="{Binding Items}"/>
+    </Page.Resources>
+    <Page.BottomAppBar>
+        <AppBar>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="btn_Setting" Click="btn_Setting_Click"  Style="{ StaticResource SettingsAppBarButtonStyle }" AutomationProperties.Name="设置" ></Button>
+            </StackPanel>
+        </AppBar>
+    </Page.BottomAppBar>
+    <Grid Name="grid1">
+        <Popup Name="addCity" Closed="addCity_Closed" ></Popup>
+
+
+        <!--
+        此网格用作定义以下两行的页的根面板:
+        * 第 0 行包含后退按钮和页标题
+        * 第 1 行包含页布局的其余部分
+    -->
+        <Grid
+        Name="background"
+        Style="{StaticResource LayoutRootStyle}"
+        DataContext="{Binding Group}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="140"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- 在大多数视图状态中使用的水平滚动网格-->
+            <GridView
+            x:Name="itemGridView"
+            AutomationProperties.AutomationId="ItemGridView"
+            AutomationProperties.Name="Items In Group"
+            TabIndex="1"
+            Grid.RowSpan="2"
+            Padding="120,126,120,50"
+            ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
+            SelectionMode="None"
+            IsSwipeEnabled="false"
+            IsItemClickEnabled="True">
+
+                <GridView.Header>
+                    <StackPanel Width="600" Margin="0,4,14,0">
+                        <TextBlock Text="日期" Name="tb_time" Margin="0,0,18,20" Style="{StaticResource SubheaderTextStyle}" MaxHeight="60"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <local:ShowImage x:Name="img_Today" Grid.Row="0" Grid.Column="0" Width="250" Height="250"></local:ShowImage>
+                            
+                            <!--<Border Name="aa" Grid.Row="0" Grid.Column="0">
+                                <Image Grid.Row="0" Grid.Column="0" Name="img_Today"  Source="{Binding Image}" Width="250" Height="250" Margin="0,0,18,20" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
+                            </Border>-->
+                            <Grid Grid.Row="0" Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Name="tb_weather" Text="天气" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Name="tb_temp" Text="温度" FontSize="40" VerticalAlignment="Center" Margin="15,0"></TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Name="tb_tempDes" Text="描述" FontSize="25"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15,10"></TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Name="tb_wind" Text="风力" FontSize="23" Margin="35,0"></TextBlock>
+                                </Grid>
+                            </Grid>                          
+                            <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="生活指数" FontSize="30"></TextBlock>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Name="tb_conft" Text="舒适度" FontSize="25"></TextBlock>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Name="tb_uv" Text="紫外线" FontSize="25"></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Name="tb_tr" Text="旅行" FontSize="25"></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Name="tb_cl" Text="晨练" FontSize="25"></TextBlock>
+                                <TextBlock Grid.Row="3" Grid.Column="0" Name="tb_xc" Text="洗车" FontSize="25"></TextBlock>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Name="tb_ls" Text="晾晒" FontSize="25"></TextBlock>
+                                <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Name="tb_gm" Text="感冒易发率" FontSize="25"></TextBlock>
+                            </Grid>                            
+                        </Grid>          
+                        <TextBlock Name="tb_cy" Text="穿衣建议:" Margin="0,20,18,0" FontSize="20" Style="{StaticResource BodyTextStyle}"/>
+                    </StackPanel>
+                </GridView.Header>
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="110" Width="380" Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Background="Transparent" Width="110" Height="110" >
+                                <!--<Image Source="{Binding Image}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Weagher}"/>-->  
+                                <local:ShowImage  ImgPath="{Binding Weather}"></local:ShowImage>
+                            </Border>
+                            <local:ShowImage Name="si" ></local:ShowImage>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
+                                <TextBlock Text="{Binding Date_y}" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding Weather}" Style="{StaticResource BodyTextStyle }" FontSize="25" Margin="8,15,0,0" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding Temp}" Style="{StaticResource BodyTextStyle}" MaxHeight="60"/>
+                                <TextBlock Text="{Binding Wind}" Style="{StaticResource CaptionTextStyle}" MaxHeight="60"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                    
+                </GridView.ItemTemplate>
+                
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="FrameworkElement">
+                        <Setter Property="Margin" Value="52,0,0,10"/>
+                    </Style>
+                </GridView.ItemContainerStyle>
+            </GridView>
+
+            
+            
+            <!-- 垂直滚动列表仅在对齐后使用-->
+            <ListView
+            x:Name="itemListView"
+            AutomationProperties.AutomationId="ItemListView"
+            AutomationProperties.Name="Items In Group"
+            TabIndex="1"
+            Grid.Row="1"
+            Visibility="Collapsed"
+            Padding="10,0,0,60"
+            ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
+            ItemTemplate="{StaticResource Standard80ItemTemplate}"
+            SelectionMode="None"
+            IsSwipeEnabled="false"
+            IsItemClickEnabled="True">
+
+                <ListView.Header>
+                    <StackPanel >
+                        <TextBlock Text="{Binding Subtitle}" Margin="10,0,18,20" Style="{StaticResource TitleTextStyle}" MaxHeight="60"/>
+                        <Image Source="{Binding Image}" Margin="10,0,18,0" MaxHeight="160" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
+                        <TextBlock Margin="10,20,18,30" Text="{Binding Description}" Style="{StaticResource BodyTextStyle}"/>
+                    </StackPanel>
+                </ListView.Header>
+            </ListView>
+
+            <!-- 后退按钮和页标题-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock x:Name="tb_cityName" Text="城市" FontSize="90" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="0" Margin="150,30" IsHitTestVisible="false"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
+                    <Button Name="btn_refresh" Style="{StaticResource RefreshAppBarButtonStyle}" AutomationProperties.Name="刷新" Tapped="btn_refresh_Tapped"></Button>
+                    <ProgressBar Name="ps_refresh" Width="200" Height="50" HorizontalAlignment="Left" VerticalAlignment="Bottom" IsIndeterminate="True" Visibility="Collapsed"/>
+                    <TextBlock Name="errorInfo" Text="刷新失败" VerticalAlignment="Bottom" FontSize="15" Visibility="Collapsed"></TextBlock>
+                </StackPanel>
+            </Grid>
+
+            <VisualStateManager.VisualStateGroups>
+
+                <!-- 视觉状态反映应用程序的视图状态-->
+                <VisualStateGroup x:Name="ApplicationViewStates">
+                    <VisualState x:Name="FullScreenLandscape"/>
+                    <VisualState x:Name="Filled"/>
+
+                    <!-- 整页采用较窄的 100 像素页边距约定(纵向)-->
+                    <VisualState x:Name="FullScreenPortrait">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                            </ObjectAnimationUsingKeyFrames>
+
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemGridView" Storyboard.TargetProperty="Padding">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="100,126,90,0"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+
+                    <!--
+                    对齐后，后退按钮和标题的样式将有所不同，并且列表表示形式将被
+                    所有视图状态中显示的网格所替代
+                -->
+                    <VisualState x:Name="Snapped">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                            </ObjectAnimationUsingKeyFrames>
+
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemGridView" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemListView" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+    </Grid>
+
+</Page>
