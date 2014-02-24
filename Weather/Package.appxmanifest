@@ -15,8 +15,8 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Weather.App">
-      <m2:VisualElements DisplayName="毛毛雨天气" Description="简洁的天气应用" BackgroundColor="#4D3F70" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
-        <m2:DefaultTile ShortName="毛毛雨天气" Wide310x150Logo="Assets\longLogo.png">
+      <m2:VisualElements DisplayName="毛毛雨天气" Description="简洁的天气应用" BackgroundColor="#36a9f9" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
+        <m2:DefaultTile ShortName="毛毛雨天气" Wide310x150Logo="Assets\longLogo.png" DefaultSize="wide310x150Logo">
           <m2:ShowNameOnTiles>
             <m2:ShowOn Tile="square150x150Logo" />
             <m2:ShowOn Tile="wide310x150Logo" />
@@ -25,7 +25,7 @@
         <m2:InitialRotationPreference>
           <m2:Rotation Preference="landscape" />
         </m2:InitialRotationPreference>
-        <m2:SplashScreen BackgroundColor="#4D3F70" Image="Assets\SplashScreen.png" />
+        <m2:SplashScreen BackgroundColor="#36a9f9" Image="Assets\SplashScreen.png" />
       </m2:VisualElements>
     </Application>
   </Applications>
