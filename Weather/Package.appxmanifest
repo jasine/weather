@@ -1,32 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="18299jsn.13439519AB08F" Publisher="CN=84BD387A-3172-4405-8B1E-1119AC2FD7E2" Version="1.1.0.2" />
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="a70362e4-57ef-4df5-958d-5f89294f5983" Publisher="CN=新宇" Version="1.0.0.0" />
   <Properties>
-    <DisplayName>毛毛雨天气</DisplayName>
+    <DisplayName>DrizzleWeather</DisplayName>
     <PublisherDisplayName>jasine</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
-    <OSMinVersion>6.3.0</OSMinVersion>
-    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
   <Resources>
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Weather.App">
-      <m2:VisualElements DisplayName="毛毛雨天气" Description="简洁的天气应用" BackgroundColor="#36a9f9" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
-        <m2:DefaultTile ShortName="毛毛雨天气" Wide310x150Logo="Assets\longLogo.png" DefaultSize="wide310x150Logo">
-          <m2:ShowNameOnTiles>
-            <m2:ShowOn Tile="square150x150Logo" />
-            <m2:ShowOn Tile="wide310x150Logo" />
-          </m2:ShowNameOnTiles>
-        </m2:DefaultTile>
-        <m2:InitialRotationPreference>
-          <m2:Rotation Preference="landscape" />
-        </m2:InitialRotationPreference>
-        <m2:SplashScreen BackgroundColor="#36a9f9" Image="Assets\SplashScreen.png" />
-      </m2:VisualElements>
+      <VisualElements DisplayName="毛毛雨天气" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="简洁的天气应用" ForegroundText="light" BackgroundColor="#36a9f9">
+        <DefaultTile ShowName="allLogos" WideLogo="Assets\longLogo.png" ShortName="天气" />
+        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#36a9f9" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+        </InitialRotationPreference>
+      </VisualElements>
     </Application>
   </Applications>
   <Capabilities>
