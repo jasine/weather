@@ -11,4 +11,4 @@
 [查看应用商店](http://apps.microsoft.com/windows/zh-cn/app/98b6fe37-972c-4ed2-b908-5e641fdf3f6a)&nbsp;&nbsp;
 
 [联系我](mailto:jasinechen@gmail.com)
-[支持网站](http://jasine.net)
+[支持网站](http://blog.jasine.net)
