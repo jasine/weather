@@ -1,6 +1,6 @@
 # 毛毛雨天气
 
-![](http://jasine.net/images/weather_all.png)
+![](http://dn-jasine.qbox.me/wp-content/uploads/weather_all2.png)
 
 * 简洁的天气应用,为您提供全国各城市未来5天内天气预报
 * 当天的各项天气生活指数，包括舒适度，紫外线强度，锻炼、洗车、晾晒、穿衣、运动等建议
