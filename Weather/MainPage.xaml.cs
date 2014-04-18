@@ -99,6 +99,7 @@ namespace Weather
                     var file = await ApplicationData.Current.LocalFolder.GetFileAsync("save.data");//获取城市记录文件
                     string str = await FileIO.ReadTextAsync(file);
                     saveWeather = JsonConvert.DeserializeObject<WeatherInfo>(str);
+                    await GetWeather();
                     UpdateInfo();
                     TimeSpan sp = DateTime.Now - saveWeather.UpdateTime;
                     if (sp.Minutes>30)
@@ -127,11 +128,11 @@ namespace Weather
             ChangeBg();
             errorInfo.Visibility = Visibility.Collapsed;
             ps_refresh.Visibility = Visibility.Visible;
+
             HttpClient hc = new HttpClient();
             try
             {
-                string text = await hc.GetStringAsync("http://m.weather.com.cn/data/" + saveWeather.Cityid + ".html");
-                saveWeather = WeatherInfo.Parse(text);
+                saveWeather.UpdateAll();
                 saveWeather.UpdateTime = DateTime.Now;
                 errorInfo.Visibility = Visibility.Collapsed;
             }
@@ -150,7 +151,7 @@ namespace Weather
         /// </summary>
         private void UpdateInfo()
         {
-            tb_cityName.Text = saveWeather.City;
+            tb_cityName.Text = saveWeather.City_Cn;
             tb_time.Text = saveWeather.Date_y + "    " + saveWeather.Week;
             tb_weather.Text = saveWeather.Weather;
             tb_temp.Text = saveWeather.Temp;
@@ -183,11 +184,11 @@ namespace Weather
             {
                 if (saveWeather == null)//第一次打开程序
                 {
-                    saveWeather = new WeatherInfo();
+                    saveWeather = new WeatherInfo(askl.outCity.Code);
                     await ApplicationData.Current.LocalFolder.CreateFileAsync("save.data");
                 }
                 saveWeather.Cityid = askl.outCity.Code;
-                await GetWeather();   
+                //await GetWeather();   
                
             }         
         }
@@ -261,7 +262,7 @@ namespace Weather
         } 
         #endregion
 
-
+        
         #region 更新磁贴
         /// <summary>
         /// 更新磁贴
@@ -272,7 +273,7 @@ namespace Weather
             XmlDocument wideTileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWideSmallImageAndText02);
 
             XmlNodeList textNodes = tileXml.GetElementsByTagName("text");
-            textNodes[0].InnerText = saveWeather.City;
+            textNodes[0].InnerText = saveWeather.City_Cn;
             textNodes[1].InnerText = saveWeather.Weather;
             textNodes[2].InnerText = saveWeather.Temp;
             textNodes[3].InnerText = saveWeather.Wind;
@@ -284,7 +285,7 @@ namespace Weather
             ((XmlElement)wideImageNodes[0]).SetAttribute("src", ShowImage.GetImageSrc(saveWeather.Weather));
             ((XmlElement)wideImageNodes[0]).SetAttribute("alt", "red graphic");
             wideTextNodes[0].InnerText = saveWeather.Weather;
-            wideTextNodes[1].InnerText = saveWeather.City;
+            wideTextNodes[1].InnerText = saveWeather.City_Cn;
             wideTextNodes[2].InnerText = saveWeather.Temp;
             wideTextNodes[3].InnerText = saveWeather.Wind;
 
